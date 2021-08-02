@@ -15,4 +15,10 @@ class Event
       truck.name
     end.uniq
   end
+
+  def food_trucks_that_sell(item)
+    @food_trucks.find_all do |truck|
+      truck.sell_item?(item)
+    end.uniq
+  end
 end
