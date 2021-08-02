@@ -5,4 +5,8 @@ class Event
     @name = name
     @food_trucks = []
   end
+
+  def add_food_truck(truck)
+    @food_trucks << truck
+  end
 end
