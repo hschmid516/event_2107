@@ -23,15 +23,14 @@ class Event
   end
 
   def total_inventory
-    inventory = {}
-    @food_trucks.each do |truck|
+    @food_trucks.reduce({}) do |acc, truck|
       truck.inventory.each do |item, amount|
-        inventory[item] ||= {quantity: 0, food_trucks: []}
-        inventory[item][:quantity] += amount
-        inventory[item][:food_trucks] << truck
+        acc[item] ||= {quantity: 0, food_trucks: []}
+        acc[item][:quantity] += amount
+        acc[item][:food_trucks] << truck
       end
+      acc
     end
-    inventory
   end
 
   def overstocked_items

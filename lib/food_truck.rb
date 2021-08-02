@@ -19,18 +19,14 @@ class FoodTruck
   end
 
   def potential_revenue
-    revenue = 0
-    @inventory.each do |item, amount|
-      revenue += item.price[1..-1].to_f * amount
+    @inventory.sum do |item, amount|
+      item.price[1..-1].to_f * amount
     end
-    revenue
   end
 
   def item_names
-    names = []
-    @inventory.each do |item, amount|
-      names << item.name
+    @inventory.map do |item, amount|
+      item.name
     end
-    names
   end
 end
