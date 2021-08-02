@@ -1,6 +1,7 @@
 require './lib/item'
 require './lib/food_truck'
 require './lib/event'
+require 'date'
 
 RSpec.describe Event do
   context 'I2' do
@@ -107,6 +108,38 @@ RSpec.describe Event do
         "Peach-Raspberry Nice Cream"
       ]
       expect(event.sorted_item_list).to eq(expected)
+    end
+  end
+
+  context 'I3' do
+    item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
+    item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
+    item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
+    item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
+    item5 = Item.new({name: 'Onion Pie', price: '$25.00'})
+    event = Event.new("South Pearl Street Farmers Market")
+    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+    food_truck1.stock(item1, 35)
+    food_truck1.stock(item2, 7)
+    food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
+    food_truck2.stock(item4, 50)
+    food_truck2.stock(item3, 25)
+    food_truck3 = FoodTruck.new("Palisade Peach Shack")
+    food_truck3.stock(item1, 65)
+    event.add_food_truck(food_truck1)
+    event.add_food_truck(food_truck2)
+    event.add_food_truck(food_truck3)
+
+    it 'has a date' do
+      expect(event.date).to eq("02/08/2021")
+
+      allow(event).to receive(:date).and_return("24/02/2020")
+
+      expect(event.date).to eq("24/02/2020")
+    end
+
+    it 'can sell items' do
+      expect(event.sell(item1, 200)).to be false
     end
   end
 end

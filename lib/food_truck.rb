@@ -29,4 +29,8 @@ class FoodTruck
       item.name
     end
   end
+
+  def reduce_stock(item, amount)
+    @inventory[item] -= amount
+  end
 end

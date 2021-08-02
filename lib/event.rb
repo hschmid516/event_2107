@@ -1,9 +1,10 @@
 class Event
-  attr_reader :name, :food_trucks
+  attr_reader :name, :food_trucks, :date
 
   def initialize(name)
     @name = name
     @food_trucks = []
+    @date = Date.today.strftime("%d/%m/%Y")
   end
 
   def add_food_truck(truck)
@@ -44,5 +45,16 @@ class Event
     @food_trucks.flat_map do |truck|
       truck.item_names
     end.uniq.sort
+  end
+
+  def sell(item, amount)
+    if total_inventory[item][:quantity] > amount
+      total_inventory[item][:food_trucks].each do |truck|
+        truck.reduce_stock(item, amount)
+      end
+      true
+    else
+      false
+    end
   end
 end
