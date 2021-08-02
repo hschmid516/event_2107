@@ -21,4 +21,16 @@ class Event
       truck.sell_item?(item)
     end.uniq
   end
+
+  def total_inventory
+    inventory = {}
+    @food_trucks.each do |truck|
+      truck.inventory.each do |item, amount|
+        inventory[item] ||= {quantity: 0, food_trucks: []}
+        inventory[item][:quantity] += amount
+        inventory[item][:food_trucks] << truck
+      end
+    end
+    inventory
+  end
 end
