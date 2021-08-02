@@ -40,4 +40,10 @@ class Event
       item if inventory[:quantity] >= 50 && inventory[:food_trucks].length > 1
     end.compact
   end
+
+  def sorted_item_list
+    @food_trucks.flat_map do |truck|
+      truck.item_names
+    end.uniq.sort
+  end
 end
