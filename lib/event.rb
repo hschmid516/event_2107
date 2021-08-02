@@ -33,4 +33,11 @@ class Event
     end
     inventory
   end
+
+  def overstocked_items
+    # would have used filter_map but my ruby version reverted to 2.6.3 somehow
+    total_inventory.map do |item, inventory|
+      item if inventory[:quantity] >= 50 && inventory[:food_trucks].length > 1
+    end.compact
+  end
 end
