@@ -25,4 +25,12 @@ class FoodTruck
     end
     revenue
   end
+
+  def item_names
+    names = []
+    @inventory.each do |item, amount|
+      names << item.name
+    end
+    names
+  end
 end
