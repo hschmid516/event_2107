@@ -5,11 +5,11 @@ require './lib/event'
 RSpec.describe Event do
   context 'I2' do
     event = Event.new("South Pearl Street Farmers Market")
-    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
     item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
     item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
     item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
     item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
+    food_truck1 = FoodTruck.new("Rocky Mountain Pies")
     food_truck1.stock(item1, 35)
     food_truck1.stock(item2, 7)
     food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
@@ -40,6 +40,15 @@ RSpec.describe Event do
 
       expected = ["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"]
       expect(event.food_truck_names).to eq(expected)
+    end
+
+    it 'shows food trucks that sell item' do
+      event.add_food_truck(food_truck1)
+      event.add_food_truck(food_truck2)
+      event.add_food_truck(food_truck3)
+
+      expected = [food_truck1, food_truck3]
+      expect(event.food_trucks_that_sell(item1)).to eq(expected)
     end
   end
 end
